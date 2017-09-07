@@ -1,0 +1,7 @@
+Good morning		ohayou gozaimasu
+good afternoon		konnichi wa
+good evening		konban wa
+good night			oyasumi nasai
+Thank you very much		doumo arigatou gozaimasu
+you're welcome		dou itashimashite
+nice to meet you	hajimemashite
