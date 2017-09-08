@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
 tab_value = 4
+fullprint = False
 
 
 def cls():
@@ -51,10 +52,14 @@ def print_clear(usr_input, truth):
 
 
 def print_scores(vocab_list, weights):
-	for voc, weight in zip(vocab_list, weights):
-		nb_tabs_ = (28. - len(voc[0])) / float(tab_value)
-		nb_tabs = math.ceil(nb_tabs_)
-		print(voc[0] + "\t" * nb_tabs + str(weight))
+	if fullprint:
+		for voc, weight in zip(vocab_list, weights):
+			if "\\" not in voc[0]:
+				nb_tabs_ = (28. - len(voc[0])) / float(tab_value)
+				nb_tabs = math.ceil(nb_tabs_)
+				print(voc[0] + "\t" * nb_tabs + str(weight))
+	else:
+		print("Completion: {}/{}".format(weights.size - np.count_nonzero(weights), weights.size))
 
 
 def main(datapath, base_w, lost_w, win_w):
@@ -65,8 +70,8 @@ def main(datapath, base_w, lost_w, win_w):
 	to_add = list(glob("./characters/*/*.png"))
 	to_add_truth = [x.split("\\")[-1].split(".")[0].lower() for x in to_add]
 	list_vocab += list(zip(to_add, to_add_truth))
-	white_image = np.ones((500,500,4))
-	white_image[:,:,3] = 0
+	white_image = np.ones((500, 500, 4))
+	white_image[:, :, 3] = 0
 
 	# Each word has points that determine the probability of being chosen.
 	weights = np.array([base_w for _ in list_vocab])
@@ -88,9 +93,9 @@ def main(datapath, base_w, lost_w, win_w):
 			img = mpimg.imread(current_word[0])
 			this_plot = plt.imshow(img)
 			plt.pause(0.001)
-			usr_input = input("What")
+			usr_input = input("What is this symbol? \n")
 		else:
-			usr_input = input("What's the japanese translation of \"" + current_word[0] + "\"" + "\n")
+			usr_input = input("What's the japanese translation of \"" + current_word[0] + "\"?" + "\n")
 			this_plot = None
 
 		usr_input = usr_input.strip()
@@ -102,12 +107,11 @@ def main(datapath, base_w, lost_w, win_w):
 			if weights[i] <= 0:
 				print("you've finished the word", current_word)
 				weights[i] = 0
-			input()
 		else:
 			# Loose
 			weights[i] += lost_w
 			print("The right answer was:", print_clear(usr_input, current_word[1]))
-			input()
+		input()
 		if this_plot is not None:
 			plt.clf()
 			plt.imshow(white_image)
