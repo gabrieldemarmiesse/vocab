@@ -1,6 +1,9 @@
 import numpy as np
 import os
 import math
+from glob import glob
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 tab_value = 4
 
@@ -58,34 +61,57 @@ def main(datapath, base_w, lost_w, win_w):
 	with open(datapath, "r") as f:
 		list_vocab = [line_to_list_element(line) for line in f]
 
+	# We also need to include characters:
+	to_add = list(glob("./characters/*/*.png"))
+	to_add_truth = [x.split("\\")[-1].split(".")[0].lower() for x in to_add]
+	list_vocab += list(zip(to_add, to_add_truth))
+	white_image = np.ones((500,500,4))
+	white_image[:,:,3] = 0
+
 	# Each word has points that determine the probability of being chosen.
 	weights = np.array([base_w for _ in list_vocab])
 
 	np.random.seed(None)
 	integers = list(range(len(weights)))
 
-	for _ in range(1000):
-		i = np.random.choice(integers, p=normalize(weights))
+	plt.ion()
+	plt.show()
 
+	for _ in range(1000):
 		print_scores(list_vocab, weights)
 		print("\nYour current score is", get_score(weights), "\n")
 
-		usr_input = input("What's the japanese translation of \"" + list_vocab[i][0] + "\"" + "\n")
+		i = np.random.choice(integers, p=normalize(weights))
+		current_word = list_vocab[i]
+
+		if "\\" in current_word[0]:
+			img = mpimg.imread(current_word[0])
+			this_plot = plt.imshow(img)
+			plt.pause(0.001)
+			usr_input = input("What")
+		else:
+			usr_input = input("What's the japanese translation of \"" + current_word[0] + "\"" + "\n")
+			this_plot = None
+
 		usr_input = usr_input.strip()
 
-		if usr_input == list_vocab[i][1]:
+		if usr_input == current_word[1]:
 			# Win
 			weights[i] -= win_w
 			print("Good answer!")
 			if weights[i] <= 0:
-				print("you've finished the word", list_vocab[i])
+				print("you've finished the word", current_word)
 				weights[i] = 0
 			input()
 		else:
 			# Loose
 			weights[i] += lost_w
-			print("The right answer was:", print_clear(usr_input, list_vocab[i][1]))
+			print("The right answer was:", print_clear(usr_input, current_word[1]))
 			input()
+		if this_plot is not None:
+			plt.clf()
+			plt.imshow(white_image)
+			plt.pause(0.001)
 		cls()
 		if get_score(weights) == 0:
 			print("you won!")
