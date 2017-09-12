@@ -66,6 +66,8 @@ def main(datapath, base_w, lost_w, win_w):
 	with open(datapath, "r") as f:
 		list_vocab = [line_to_list_element(line) for line in f]
 
+	list_vocab += [x[::-1] for x in list_vocab]
+
 	# We also need to include characters:
 	to_add = list(glob("./characters/*/*.png"))
 	to_add_truth = [x.split("\\")[-1].split(".")[0].lower() for x in to_add]
@@ -100,7 +102,7 @@ def main(datapath, base_w, lost_w, win_w):
 
 		usr_input = usr_input.strip()
 
-		if usr_input == current_word[1]:
+		if usr_input.lower() == current_word[1].lower():
 			# Win
 			weights[i] -= win_w
 			print("Good answer!")
