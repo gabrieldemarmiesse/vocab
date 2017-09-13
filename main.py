@@ -16,7 +16,7 @@ def cls():
 def line_to_list_element(line):
 	line = line.strip()
 	splitted_line = line.split("\t")
-	return splitted_line[0].strip(), splitted_line[-1].strip()
+	return splitted_line[0].strip(), splitted_line[-1].strip(), "EJ"
 
 
 def normalize(array):
@@ -57,7 +57,7 @@ def print_scores(vocab_list, weights):
 			if "\\" not in voc[0]:
 				nb_tabs_ = (28. - len(voc[0])) / float(tab_value)
 				nb_tabs = math.ceil(nb_tabs_)
-				print(voc[0] + "\t" * nb_tabs + str(weight))
+				print(voc[0] + "\t" * int(nb_tabs) + str(weight))
 	else:
 		print("Completion: {}/{}".format(weights.size - np.count_nonzero(weights), weights.size))
 
@@ -66,17 +66,19 @@ def main(datapath, base_w, lost_w, win_w):
 	with open(datapath, "r") as f:
 		list_vocab = [line_to_list_element(line) for line in f]
 
-	list_vocab += [x[::-1] for x in list_vocab]
+	list_vocab += [x[-2:-4:-1] + ("JE",) for x in list_vocab]
 
 	# We also need to include characters:
 	to_add = list(glob("./characters/*/*.png"))
 	to_add_truth = [x.split("\\")[-1].split(".")[0].lower() for x in to_add]
-	list_vocab += list(zip(to_add, to_add_truth))
+	dummy_list = ["K" for _ in to_add]
+	list_vocab += list(zip(to_add, to_add_truth, dummy_list))
 	white_image = np.ones((500, 500, 4))
 	white_image[:, :, 3] = 0
 
 	# Each word has points that determine the probability of being chosen.
 	weights = np.array([base_w for _ in list_vocab])
+	base_score = get_score(weights)
 
 	np.random.seed(None)
 	integers = list(range(len(weights)))
@@ -86,18 +88,19 @@ def main(datapath, base_w, lost_w, win_w):
 
 	for _ in range(1000):
 		print_scores(list_vocab, weights)
-		print("\nYour current score is", get_score(weights), "\n")
+		print("\nYour current score is", get_score(weights), "/", base_score, "\n")
 
 		i = np.random.choice(integers, p=normalize(weights))
 		current_word = list_vocab[i]
 
-		if "\\" in current_word[0]:
+		if current_word[2] == "K":
 			img = mpimg.imread(current_word[0])
 			this_plot = plt.imshow(img)
 			plt.pause(0.001)
 			usr_input = input("What is this symbol? \n")
 		else:
-			usr_input = input("What's the japanese translation of \"" + current_word[0] + "\"?" + "\n")
+			target_language = "english" if current_word[2] == "JE" else "japanese"
+			usr_input = input("What's the " + target_language + " translation of \"" + current_word[0] + "\"?" + "\n")
 			this_plot = None
 
 		usr_input = usr_input.strip()

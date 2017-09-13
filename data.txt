@@ -116,7 +116,7 @@ dinner			bangohan
 like			suki
 dislike			kirai
 love			daisuki
-hate			dailirai
+hate			daikirai
 this one		kore
 that one		sore
 that one over there		are
