@@ -62,9 +62,19 @@ def print_scores(vocab_list, weights):
 		print("Completion: {}/{}".format(weights.size - np.count_nonzero(weights), weights.size))
 
 
+def iterate(f):
+	while 1:
+		line = next(f)
+		if line == "\n":
+			print("EOF")
+			break
+		else:
+			yield line
+
+
 def main(datapath, base_w, lost_w, win_w):
 	with open(datapath, "r") as f:
-		list_vocab = [line_to_list_element(line) for line in f]
+		list_vocab = [line_to_list_element(line) for line in iterate(f)]
 
 	list_vocab += [x[-2:-4:-1] + ("JE",) for x in list_vocab]
 

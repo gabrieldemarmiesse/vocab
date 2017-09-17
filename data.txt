@@ -165,3 +165,40 @@ to drink		nomimasu
 to drink te		nonde
 please			kudasai
 let's			mashou
+dad/your dad	otousan
+mom/your mom	okaasan
+my dad			chichi
+my mom			haha
+your older brother		oniisan
+your older sister		oneesan
+my older brother		ani
+my older sister			ane
+your younger brother	otoutosan
+your younger sister		imoutosan
+my younger brother		otouto
+my younger sister		imouto
+my husband formal		shujin
+your husband formal		goshujin
+my husband casual		danna
+your husband casual		dannasan
+my wife					tsuma
+your wife				okusan
+he/boyfriend			kare
+her/girlfriend			kanojo
+hobby					shumi
+interest				kiuumi
+the countryside			ninaka
+place					tokoro
+the city				tokai
+movie					eiga
+theater					eigakan
+shopping			kaimono
+birthday			tanjoubi
+party				paateii
+money				okane
+music				ongaku
+piano				piano
+
+
+
+
