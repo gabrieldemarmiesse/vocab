@@ -26,9 +26,11 @@ def normalize(array):
 	return array
 
 
-def get_score(array):
+def get_score(array, lossless=False):
 	new_array = np.copy(array)
 	new_array[new_array < 0] = 0
+	if lossless:
+		new_array[new_array > 1.5] = 1.5
 	return np.sum(new_array)
 
 
@@ -72,11 +74,14 @@ def iterate(f):
 			yield line
 
 
-def main(datapath, base_w, lost_w, win_w):
-	with open(datapath, "r") as f:
-		list_vocab = [line_to_list_element(line) for line in iterate(f)]
+def main(datapath, base_w, lost_w, win_w, do_vocab):
+	if do_vocab:
+		with open(datapath, "r") as f:
+			list_vocab = [line_to_list_element(line) for line in iterate(f)]
 
-	list_vocab += [x[-2:-4:-1] + ("JE",) for x in list_vocab]
+		list_vocab += [x[-2:-4:-1] + ("JE",) for x in list_vocab]
+	else:
+		list_vocab = []
 
 	# We also need to include characters:
 	to_add = list(glob("./characters/*/*.png"))
@@ -98,7 +103,8 @@ def main(datapath, base_w, lost_w, win_w):
 
 	for _ in range(1000):
 		print_scores(list_vocab, weights)
-		print("\nYour current score is", get_score(weights), "/", base_score, "\n")
+		print("\nYour current        score is", get_score(weights), "/", base_score)
+		print("Your current lossless score is", get_score(weights, True), "/", base_score, "\n")
 
 		i = np.random.choice(integers, p=normalize(weights))
 		current_word = list_vocab[i]
@@ -138,4 +144,4 @@ def main(datapath, base_w, lost_w, win_w):
 
 
 if __name__ == "__main__":
-	main("./data.txt", 1.5, 1.5, 1)
+	main("./data.txt", 1.5, 1.5, 1, False)

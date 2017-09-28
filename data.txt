@@ -198,6 +198,18 @@ party				paateii
 money				okane
 music				ongaku
 piano				piano
+how are you?		o genki desu ka
+I'm fine			hai, genki desu
+what's your name?	o namae wa nan desu ka
+i'm from france		furansu shusshin desu
+I understand		wakarimasu
+I don't understand	wakarimasen
+please speak more slowly		yukkuri itte kudasai
+please say that again			mo hitotsu itte kudasai
+do you speak english?			eigo wa dekimasu ka
+how much is it?					ikura desu ka
+where is the toilet?			toire wa doko desu ka
+I don't speak japanese			nihongo o hanasemasen
 
 
 
