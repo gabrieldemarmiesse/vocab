@@ -70,8 +70,7 @@ i'm leaving		itte kimasu
 see you when you get home	itterashai
 i'm home		tadaima
 welcome back	okaerinasai
-good night		oyasuminasai
-i'm sorry		sumimasen
+sorry		sumimasen
 well then		dewa
 goodbye			ja, mata
 what			nan
@@ -177,12 +176,6 @@ your younger brother	otoutosan
 your younger sister		imoutosan
 my younger brother		otouto
 my younger sister		imouto
-my husband formal		shujin
-your husband formal		goshujin
-my husband casual		danna
-your husband casual		dannasan
-my wife					tsuma
-your wife				okusan
 he/boyfriend			kare
 her/girlfriend			kanojo
 hobby					shumi
@@ -198,19 +191,35 @@ party				paateii
 money				okane
 music				ongaku
 piano				piano
-how are you?		o genki desu ka
-I'm fine			hai, genki desu
-what's your name?	o namae wa nan desu ka
-i'm from france		furansu shusshin desu
-I understand		wakarimasu
-I don't understand	wakarimasen
-please speak more slowly		yukkuri itte kudasai
-please say that again			mo hitotsu itte kudasai
-do you speak english?			eigo wa dekimasu ka
-how much is it?					ikura desu ka
-where is the toilet?			toire wa doko desu ka
-I don't speak japanese			nihongo o hanasemasen
-
-
+right		migi
+left		migari
+inside		naka
+outside		soto
+to do		shimasu
+to do te	shite
+to speak	hanashimasu
+to speak te	hanashite
+to hear		kikimasu
+to hear te	kiite
+to write	kakimasu
+to write te	kaite
+to buy		kaimasu
+to buy te	katte
+to stand	tachimasu
+to stand te	tatte
+to sit		suwarimasu
+to sit te	suwatte
+to understand	wakarimasu
+to understand te	wakatte
+study		benkyou
+practice	wenshouu
+cleaning	souji
+cooking		riyouri
+telephone	denwa
+also		mo
+who		dare
+when		itsu
+why		naze
+how		dou yatte
 
 
